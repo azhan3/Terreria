@@ -4,13 +4,16 @@ import components.SpriteRenderer;
 import components.Spritesheet;
 import org.joml.Vector2f;
 import util.AssetPool;
+import java.util.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class LevelEditorScene extends Scene {
-    GameObject obj1, obj2;
+    GameObject obj1, obj2, testObj;
     Spritesheet sprites;
+    int count=0;
     GameObject[] objects = new GameObject[32];
+    ArrayList<GameObject>testOOOOO = new ArrayList<>();
     public LevelEditorScene() {
 
     }
@@ -27,9 +30,9 @@ public class LevelEditorScene extends Scene {
 
         obj1.addComponent(new SpriteRenderer(sprites.getSprite(1)));
         this.addGameObjectToScene(obj1);
-        obj2 = new GameObject("Object 1", new Transform(new Vector2f(95, 492), new Vector2f(100, 100)), 3);
+        obj2 = new GameObject("Object 1", new Transform(new Vector2f(150, 500), new Vector2f(100, 100)), 3);
 
-        obj2.addComponent(new SpriteRenderer(sprites.getSprite(1)));
+        obj2.addComponent(new SpriteRenderer(sprites.getSprite(0)));
         this.addGameObjectToScene(obj2);
 
         /*for (int i = 0 ; i < 512 ; i+=16) {
@@ -53,6 +56,7 @@ public class LevelEditorScene extends Scene {
     private float spriteFlipTimeLeft = 0.0f;
     @Override
     public void update(float dt) {
+        System.out.println(1.0f/dt);
         if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT)) {
             camera.position.x += 100f * dt;
         } else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT)) {
@@ -64,19 +68,23 @@ public class LevelEditorScene extends Scene {
             camera.position.y -= 100f * dt;
         }
 
+
         for (GameObject go : this.gameObjects) {
             go.update(dt);
         }
 
-        /*spriteFlipTimeLeft -= dt;
+        spriteFlipTimeLeft -= dt;
         if (spriteFlipTimeLeft <= 0) {
             spriteFlipTimeLeft = spriteFlipTime;
             spriteIndex++;
+            testOOOOO.add(new GameObject("Object 1", new Transform(new Vector2f(count++*20, 0), new Vector2f(20, 20)), 10)) ;
+            testOOOOO.get(count-1).addComponent(new SpriteRenderer(sprites.getSprite(1)));
+            this.addGameObjectToScene(testOOOOO.get(count-1));
             if (spriteIndex > 1) {
                 spriteIndex = 0;
             }
             obj1.getComponent(SpriteRenderer.class).setSprite(sprites.getSprite(spriteIndex));
-        }*/
+        }
 
         this.renderer.render();
     }

@@ -13,6 +13,7 @@ public class Window {
     private int width, height;
     private String title;
     private long glfwWindow;
+    private ImGuiLayer imguiLayer;
 
     public float r, g, b, a;
     private boolean fadeToBlack = false;
@@ -25,9 +26,9 @@ public class Window {
         this.width = 1920;
         this.height = 1080;
         this.title = "Terraria";
-        r = 0.7f;
-        b = 0.2f;
-        g = 0.1f;
+        r = 1;
+        b = 1;
+        g = 1;
         a = 1;
     }
 
@@ -101,15 +102,31 @@ public class Window {
         glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+        glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
+            Window.setWidth(newWidth);
+            Window.setHeight(newHeight);
+        });
 
+        // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
+        // Enable v-sync
         glfwSwapInterval(1);
 
+        // Make the window visible
         glfwShowWindow(glfwWindow);
 
+        // This line is critical for LWJGL's interoperation with GLFW's
+        // OpenGL context, or any context that is managed externally.
+        // LWJGL detects the context that is current in the current thread,
+        // creates the GLCapabilities instance and makes the OpenGL
+        // bindings available for use.
         GL.createCapabilities();
+
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        this.imguiLayer = new ImGuiLayer(glfwWindow);
+        this.imguiLayer.initImGui();
+
         Window.changeScene(0);
     }
 
@@ -129,11 +146,28 @@ public class Window {
                 currentScene.update(dt);
             }
 
+            this.imguiLayer.update(dt);
             glfwSwapBuffers(glfwWindow);
 
             endTime = (float)glfwGetTime();
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+    }
+
+    public static int getWidth() {
+        return get().width;
+    }
+
+    public static int getHeight() {
+        return get().height;
+    }
+
+    public static void setWidth(int newWidth) {
+        get().width = newWidth;
+    }
+
+    public static void setHeight(int newHeight) {
+        get().height = newHeight;
     }
 }
