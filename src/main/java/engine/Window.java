@@ -1,4 +1,4 @@
-package jade;
+package engine;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -35,19 +35,19 @@ public class Window {
     public static void changeScene(int newScene) {
         switch (newScene) {
             case 0:
-                currentScene = new LevelEditorScene();
-                currentScene.init();
-                currentScene.start();
+                currentScene = new GameScene();
                 break;
             case 1:
-                currentScene = new LevelScene();
-                currentScene.init();
-                currentScene.start();
+                currentScene = new StartScene();
                 break;
             default:
                 assert false : "Unknown scene '" + newScene + "'";
                 break;
         }
+
+        currentScene.load();
+        currentScene.init();
+        currentScene.start();
     }
 
     public static Window get() {
@@ -146,13 +146,15 @@ public class Window {
                 currentScene.update(dt);
             }
 
-            this.imguiLayer.update(dt);
+            this.imguiLayer.update(dt, currentScene);
             glfwSwapBuffers(glfwWindow);
 
             endTime = (float)glfwGetTime();
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+        System.out.println("SAVEDDDDDDDDD");
+        currentScene.saveExit();
     }
 
     public static int getWidth() {
