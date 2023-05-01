@@ -1,8 +1,12 @@
-package engine;
+package jade;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import renderer.DebugDraw;
+import scenes.LevelEditorScene;
+import scenes.LevelScene;
+import scenes.Scene;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -35,10 +39,10 @@ public class Window {
     public static void changeScene(int newScene) {
         switch (newScene) {
             case 0:
-                currentScene = new GameScene();
+                currentScene = new LevelEditorScene();
                 break;
             case 1:
-                currentScene = new StartScene();
+                currentScene = new LevelScene();
                 break;
             default:
                 assert false : "Unknown scene '" + newScene + "'";
@@ -139,10 +143,13 @@ public class Window {
             // Poll events
             glfwPollEvents();
 
+            DebugDraw.beginFrame();
+
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
 
             if (dt >= 0) {
+                DebugDraw.draw();
                 currentScene.update(dt);
             }
 
@@ -153,7 +160,7 @@ public class Window {
             dt = endTime - beginTime;
             beginTime = endTime;
         }
-        System.out.println("SAVEDDDDDDDDD");
+
         currentScene.saveExit();
     }
 

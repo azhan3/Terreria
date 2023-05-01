@@ -1,7 +1,7 @@
 package renderer;
 
 import components.SpriteRenderer;
-import engine.Window;
+import jade.Window;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import util.AssetPool;

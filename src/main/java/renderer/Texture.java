@@ -39,6 +39,7 @@ public class Texture {
         stbi_set_flip_vertically_on_load(true);
         ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
 
+
         if (image != null) {
             this.width = width.get(0);
             this.height = height.get(0);

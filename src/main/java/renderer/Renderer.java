@@ -1,7 +1,7 @@
 package renderer;
 
 import components.SpriteRenderer;
-import engine.GameObject;
+import jade.GameObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
