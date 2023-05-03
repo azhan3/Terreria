@@ -39,6 +39,7 @@ public class LevelEditorScene extends Scene {
         }
 
 
+
 //        obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100),
 //                new Vector2f(256, 256)), 2);
 //        obj1Sprite = new SpriteRenderer();
@@ -67,10 +68,22 @@ public class LevelEditorScene extends Scene {
         AssetPool.addSpritesheet("assets/images/spritesheets/blocks.png",
                 new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/blocks.png"),
                         16, 16, 30, 0));
-        AssetPool.getTexture("assets/images/Sunplate_Block.png");
+        AssetPool.addSpritesheet("assets/images/spritesheets/player_walk.png", new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/player_walk.png"), 43, 60, 10, 0));
 
         AssetPool.getTexture("assets/images/Dirt_Block.png");
-        System.out.println(AssetPool.getTexture("assets/images/Dirt_Block.png"));
+        for (GameObject g : this.getGameObjects()) {
+            if (g.getComponent(SpriteRenderer.class) != null) {
+                SpriteRenderer spr = g.getComponent(SpriteRenderer.class);
+                if (spr.getTexture() != null) {
+                    spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilepath()));
+                }
+            }
+
+            if (g.getComponent(StateMachine.class) != null) {
+                StateMachine stateMachine = g.getComponent(StateMachine.class);
+                stateMachine.refreshTextures();
+            }
+        }
     }
 
     @Override
@@ -86,6 +99,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void imgui() {
+
         ImGui.begin("Inventory");
 
         ImVec2 windowPos = new ImVec2();
@@ -122,7 +136,17 @@ public class LevelEditorScene extends Scene {
                 ImGui.sameLine();
             }
         }
+        Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheets/player_walk.png");
+        Sprite sprite = playerSprites.getSprite(0);
+        float spriteWidth = sprite.getWidth() * 4;
+        float spriteHeight = sprite.getHeight() * 4;
+        int id = sprite.getTexId();
+        Vector2f[] texCoords = sprite.getTexCoords();
 
+        if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+            GameObject plr = Prefabs.generatePlayer();
+            levelEditorStuff.getComponent(MouseControls.class).pickupObject(plr);
+        }
         ImGui.end();
     }
 }
