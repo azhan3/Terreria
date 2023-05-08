@@ -8,6 +8,8 @@ import imgui.ImGui;
 import jade.Camera;
 import jade.GameObject;
 import jade.GameObjectDeserializer;
+import jade.Transform;
+import physics2d.Physics2D;
 import renderer.Renderer;
 
 import java.io.FileWriter;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scene {
+    private Physics2D physics2D = new Physics2D();
 
     protected Renderer renderer = new Renderer();
     protected Camera camera;
@@ -38,6 +41,8 @@ public abstract class Scene {
         for (GameObject go : gameObjects) {
             go.start();
             this.renderer.add(go);
+            this.physics2D.add(go);
+
         }
         isRunning = true;
     }
@@ -49,9 +54,16 @@ public abstract class Scene {
             gameObjects.add(go);
             go.start();
             this.renderer.add(go);
+            this.physics2D.add(go);
+
         }
     }
-
+    public GameObject createGameObject(String name) {
+        GameObject go = new GameObject(name);
+        go.addComponent(new Transform());
+        go.transform = go.getComponent(Transform.class);
+        return go;
+    }
     public abstract void update(float dt);
 
     public Camera camera() {
@@ -71,9 +83,24 @@ public abstract class Scene {
     public void imgui() {
 
     }
+    public void editorUpdate(float dt) {
+        this.camera.adjustProjection();
 
+        for (int i = 0; i < gameObjects.size(); i++) {
+            GameObject go = gameObjects.get(i);
+            go.editorUpdate(dt);
+
+            if (go.isDead()) {
+                gameObjects.remove(i);
+                this.renderer.destroyGameObject(go);
+                this.physics2D.destroyGameObject(go);
+                i--;
+            }
+        }
+    }
     public void saveExit() {
         Gson gson = new GsonBuilder()
+                .enableComplexMapKeySerialization()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
@@ -87,6 +114,7 @@ public abstract class Scene {
                     objsToSerialize.add(obj);
                 }
             }
+            System.out.println(objsToSerialize);
             writer.write(gson.toJson(objsToSerialize));
             writer.close();
         } catch(IOException e) {
@@ -96,6 +124,7 @@ public abstract class Scene {
 
     public void load() {
         Gson gson = new GsonBuilder()
+                .enableComplexMapKeySerialization()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
@@ -133,6 +162,9 @@ public abstract class Scene {
     }
     public List<GameObject> getGameObjects() {
         return this.gameObjects;
+    }
+    public Physics2D getPhysics() {
+        return this.physics2D;
     }
 
 }

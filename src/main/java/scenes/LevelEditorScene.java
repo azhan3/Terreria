@@ -3,14 +3,14 @@ package scenes;
 import components.*;
 import imgui.ImGui;
 import imgui.ImVec2;
-import jade.Camera;
-import jade.GameObject;
-import jade.Prefabs;
-import jade.Transform;
+import jade.*;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import renderer.Renderer;
 import scenes.Scene;
 import util.AssetPool;
+
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 public class LevelEditorScene extends Scene {
     private Sprite selected;
@@ -30,7 +30,7 @@ public class LevelEditorScene extends Scene {
         levelEditorStuff.addComponent(new GridLines());
 
         loadResources();
-        this.camera = new Camera(new Vector2f(-250, 0));
+        this.camera = new Camera(new Vector2f(0, 0));
         sprites = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
         blocks = AssetPool.getSpritesheet("assets/images/spritesheets/blocks.png");
         if (levelLoaded) {
@@ -39,6 +39,7 @@ public class LevelEditorScene extends Scene {
         }
 
 
+        System.out.println(Window.getScene().getGameObjects().size());
 
 //        obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100),
 //                new Vector2f(256, 256)), 2);
@@ -61,7 +62,7 @@ public class LevelEditorScene extends Scene {
 
     private void loadResources() {
         AssetPool.getShader("assets/shaders/default.glsl");
-
+        Renderer.bindShader(AssetPool.getShader("assets/shaders/default.glsl"));
         AssetPool.addSpritesheet("assets/images/spritesheets/spritesheet.png",
                 new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/spritesheet.png"),
                         48, 48, 2, 0));
@@ -69,8 +70,12 @@ public class LevelEditorScene extends Scene {
                 new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/blocks.png"),
                         16, 16, 30, 0));
         AssetPool.addSpritesheet("assets/images/spritesheets/player_walk.png", new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/player_walk.png"), 43, 60, 10, 0));
+        AssetPool.addSpritesheet("assets/images/spritesheets/player_swing.png", new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/player_swing.png"), 43, 60, 10, 0));
 
         AssetPool.getTexture("assets/images/Dirt_Block.png");
+        AssetPool.getTexture("assets/images/IdleCharacter.png");
+        AssetPool.getTexture("assets/images/JumpCharacter.png");
+
         for (GameObject g : this.getGameObjects()) {
             if (g.getComponent(SpriteRenderer.class) != null) {
                 SpriteRenderer spr = g.getComponent(SpriteRenderer.class);
@@ -147,6 +152,8 @@ public class LevelEditorScene extends Scene {
             GameObject plr = Prefabs.generatePlayer();
             levelEditorStuff.getComponent(MouseControls.class).pickupObject(plr);
         }
+
+
         ImGui.end();
     }
 }

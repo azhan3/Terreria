@@ -3,6 +3,7 @@ package jade;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import physics2d.Physics2D;
 import renderer.DebugDraw;
 import scenes.LevelEditorScene;
 import scenes.LevelScene;
@@ -151,6 +152,7 @@ public class Window {
             if (dt >= 0) {
                 DebugDraw.draw();
                 currentScene.update(dt);
+                currentScene.editorUpdate(dt);
             }
 
             this.imguiLayer.update(dt, currentScene);
@@ -179,4 +181,7 @@ public class Window {
     public static void setHeight(int newHeight) {
         get().height = newHeight;
     }
+    public static Physics2D getPhysics() { return currentScene.getPhysics(); }
+
+
 }

@@ -32,7 +32,7 @@ dependencies {
 
     // LWJGL stuff
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
-
+    implementation group: 'org.jbox2d', name: 'jbox2d-library', version: '2.2.1.1'
     implementation "org.lwjgl:lwjgl"
     implementation "org.lwjgl:lwjgl-assimp"
     implementation "org.lwjgl:lwjgl-glfw"

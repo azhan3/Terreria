@@ -26,6 +26,7 @@ public class ComponentDeserializer implements JsonSerializer<Component>,
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(src.getClass().getCanonicalName()));
         result.add("properties", context.serialize(src, src.getClass()));
+
         return result;
     }
 }

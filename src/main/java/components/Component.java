@@ -4,7 +4,10 @@ import imgui.ImGui;
 import jade.GameObject;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-
+import org.jbox2d.dynamics.contacts.Contact;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -19,6 +22,9 @@ public abstract class Component {
     }
 
     public void update(float dt) {
+
+    }
+    public void destroy() {
 
     }
 
@@ -93,5 +99,23 @@ public abstract class Component {
 
     public static void init(int maxId) {
         ID_COUNTER = maxId;
+    }
+
+    public void editorUpdate(float dt) {
+    }
+    public void beginCollision(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+
+    }
+
+    public void endCollision(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+
+    }
+
+    public void preSolve(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+
+    }
+
+    public void postSolve(GameObject collidingObject, Contact contact, Vector2f hitNormal) {
+
     }
 }
