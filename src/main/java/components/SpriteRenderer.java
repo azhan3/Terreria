@@ -1,7 +1,6 @@
 package components;
 
-import imgui.ImGui;
-import jade.Transform;
+import engine.Transform;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Texture;
@@ -56,6 +55,7 @@ public class SpriteRenderer extends Component {
     }
 
     public void setSprite(Sprite sprite) {
+        System.out.println(sprite.getTexture().getFilepath());
         this.sprite = sprite;
         this.isDirty = true;
     }

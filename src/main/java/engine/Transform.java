@@ -1,4 +1,4 @@
-package jade;
+package engine;
 
 import components.Component;
 import org.joml.Vector2f;

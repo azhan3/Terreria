@@ -5,10 +5,10 @@ import com.google.gson.GsonBuilder;
 import components.Component;
 import components.ComponentDeserializer;
 import imgui.ImGui;
-import jade.Camera;
-import jade.GameObject;
-import jade.GameObjectDeserializer;
-import jade.Transform;
+import engine.Camera;
+import engine.GameObject;
+import engine.GameObjectDeserializer;
+import engine.Transform;
 import physics2d.Physics2D;
 import renderer.Renderer;
 

@@ -1,5 +1,8 @@
 package components;
 
+import renderer.Texture;
+import util.AssetPool;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,8 +112,19 @@ public class StateMachine extends Component {
     public void update(float dt) {
         if (currentState != null) {
             currentState.update(dt);
+
             SpriteRenderer sprite = gameObject.getComponent(SpriteRenderer.class);
-            sprite.setSprite(currentState.getCurrentSprite());
+
+            if (Objects.equals(currentState.title, "Jump") || Objects.equals(currentState.title, "Idle")) {
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                Sprite a = new Sprite(AssetPool.getTexture("assets/images/JumpCharacter.png"));
+
+                sprite.setSprite(a);
+            } else {
+                sprite.setSprite(currentState.getCurrentSprite());
+
+            }
+            //System.out.println(sprite.getTexture().getFilepath());
         }
     }
 

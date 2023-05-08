@@ -3,14 +3,10 @@ package scenes;
 import components.*;
 import imgui.ImGui;
 import imgui.ImVec2;
-import jade.*;
+import engine.*;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 import renderer.Renderer;
-import scenes.Scene;
 import util.AssetPool;
-
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 public class LevelEditorScene extends Scene {
     private Sprite selected;
