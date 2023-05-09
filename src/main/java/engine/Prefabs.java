@@ -39,9 +39,9 @@ public class Prefabs {
         jump.title = "Jump";
         float defaultFrameTime = 0.08f;
         jump.addFrame(new Sprite(jumpPlayer), defaultFrameTime);
-        jump.setLoop(false);
+        jump.setLoop(true);
         idle.addFrame(new Sprite(idlePlayer), defaultFrameTime);
-        idle.setLoop(false);
+        idle.setLoop(true);
         walk.addFrame(walkSprites.getSprite(0), defaultFrameTime);
         walk.addFrame(walkSprites.getSprite(1), defaultFrameTime);
         walk.addFrame(walkSprites.getSprite(2), defaultFrameTime);

@@ -20,7 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scene {
-    private Physics2D physics2D = new Physics2D();
+    public GameObject levelEditorStuff;
+    Physics2D physics2D = new Physics2D();
 
     protected Renderer renderer = new Renderer();
     protected Camera camera;
@@ -83,21 +84,7 @@ public abstract class Scene {
     public void imgui() {
 
     }
-    public void editorUpdate(float dt) {
-        this.camera.adjustProjection();
 
-        for (int i = 0; i < gameObjects.size(); i++) {
-            GameObject go = gameObjects.get(i);
-            go.editorUpdate(dt);
-
-            if (go.isDead()) {
-                gameObjects.remove(i);
-                this.renderer.destroyGameObject(go);
-                this.physics2D.destroyGameObject(go);
-                i--;
-            }
-        }
-    }
     public void saveExit() {
         Gson gson = new GsonBuilder()
                 .enableComplexMapKeySerialization()

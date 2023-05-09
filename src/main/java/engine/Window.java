@@ -152,7 +152,6 @@ public class Window {
             if (dt >= 0) {
                 DebugDraw.draw();
                 currentScene.update(dt);
-                currentScene.editorUpdate(dt);
             }
 
             this.imguiLayer.update(dt, currentScene);

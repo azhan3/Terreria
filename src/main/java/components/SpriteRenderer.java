@@ -55,7 +55,6 @@ public class SpriteRenderer extends Component {
     }
 
     public void setSprite(Sprite sprite) {
-        System.out.println(sprite.getTexture().getFilepath());
         this.sprite = sprite;
         this.isDirty = true;
     }

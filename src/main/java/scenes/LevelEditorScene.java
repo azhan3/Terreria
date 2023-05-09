@@ -1,10 +1,14 @@
 package scenes;
 
+import Map.NewMap;
 import components.*;
 import imgui.ImGui;
 import imgui.ImVec2;
 import engine.*;
 import org.joml.Vector2f;
+import physics2d.components.Box2DCollider;
+import physics2d.components.Rigidbody2D;
+import physics2d.enums.BodyType;
 import renderer.Renderer;
 import util.AssetPool;
 
@@ -34,7 +38,7 @@ public class LevelEditorScene extends Scene {
             return;
         }
 
-
+        //new NewMap();
         System.out.println(Window.getScene().getGameObjects().size());
 
 //        obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100),
@@ -94,6 +98,20 @@ public class LevelEditorScene extends Scene {
         for (GameObject go : this.gameObjects) {
             go.update(dt);
         }
+        this.camera.adjustProjection();
+        this.physics2D.update(dt);
+
+        for (int i=0; i < gameObjects.size(); i++) {
+            GameObject go = gameObjects.get(i);
+            go.update(dt);
+
+            if (go.isDead()) {
+                gameObjects.remove(i);
+                this.renderer.destroyGameObject(go);
+                this.physics2D.destroyGameObject(go);
+                i--;
+            }
+        }
 
         this.renderer.render();
     }
@@ -120,11 +138,15 @@ public class LevelEditorScene extends Scene {
 
             ImGui.pushID(i);
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y)) {
-                selected = sprite;
-
-
-
                 GameObject object = Prefabs.generateSpriteObject(sprite, 16, 16);
+                Rigidbody2D rb = new Rigidbody2D();
+                rb.setBodyType(BodyType.Static);
+                object.addComponent(rb);
+                Box2DCollider b2d = new Box2DCollider();
+                b2d.setHalfSize(new Vector2f(16, 16));
+                object.addComponent(b2d);
+                object.addComponent(new Ground());
+
                 levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
             }
             ImGui.popID();

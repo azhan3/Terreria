@@ -1,15 +1,14 @@
 package components;
 
-import engine.GameObject;
-import engine.KeyListener;
-import engine.MouseListener;
-import engine.Window;
+import engine.*;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import physics2d.Physics2D;
 import physics2d.components.PillboxCollider;
 import physics2d.components.Rigidbody2D;
+import util.AssetPool;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,13 +16,12 @@ import java.util.Set;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class PlayerController extends Component {
-    public float walkSpeed = 1.9f;
-    public float jumpBoost = 1.0f;
+    public float walkSpeed = 100.0f;
+    public float jumpBoost = 100.0f;
     public float jumpImpulse = 3.0f;
     public float slowDownForce = 0.05f;
-    public Vector2f terminalVelocity = new Vector2f(2.1f, 3.1f);
 
-    public transient boolean onGround = false;
+    public transient boolean onGround = false, ceiling = false, right=false, left=false;
     private transient float groundDebounce = 0.0f;
     private transient float groundDebounceTime = 0.1f;
     private transient Rigidbody2D rb;
@@ -53,29 +51,27 @@ public class PlayerController extends Component {
     public void update(float dt) {
 
         boolean idle = true;
+        checkOnGround();
+        checkCeilCol();
+        checkRightCol();
+        if (ceiling) {
+            jumpTime = 1;
+            this.velocity.y = -10f;
+        }
 
-        if (KeyListener.isKeyPressed(GLFW_KEY_D)) {
+
+        if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW_KEY_D)) {
+            this.velocity.x = walkSpeed;
+            this.stateMachine.trigger("Walk");
+            idle = false;
+
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT) || KeyListener.isKeyPressed(GLFW_KEY_A)) {
+            this.velocity.x = -walkSpeed;
             idle = false;
             this.stateMachine.trigger("Walk");
-            this.velocity.x = 2.0f;
-        }  if (KeyListener.isKeyPressed(GLFW_KEY_A)) {
-            this.velocity.x = -2.0f;
-            idle = false;
+        }
 
-            this.stateMachine.trigger("Walk");
-            Body body = this.gameObject.getComponent(Rigidbody2D.class).getRawBody();
-            float angle = body.getTransform().q.getAngle();
-            Vec2 position = body.getPosition();
-            Vec2 flippedPosition = new Vec2(position.x + this.velocity.x, position.y);
-
-            body.setTransform(flippedPosition, angle);
-
-        }  if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
-            this.stateMachine.trigger("Jump");
-            this.velocity.y = 2f;
-            idle = false;
-
-        }  if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+        if (MouseListener.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
             this.stateMachine.trigger("Swing");
             idle = false;
 
@@ -85,127 +81,55 @@ public class PlayerController extends Component {
             this.velocity.x = 0;
         }
 
-        Body body = this.gameObject.getComponent(Rigidbody2D.class).getRawBody();
-        Vector4f col = collision();
-        if (col.z == 1.0f) {
-            velocity.y = Math.max(velocity.y, 0);
-        } if (col.x == 1.0f) {
-            velocity.x = Math.min(velocity.x, 0);
+        if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && (jumpTime > 0 || onGround)) {
+
+            if (onGround && jumpTime==0) {
+                jumpTime = 15;
+                this.velocity.y = 350.0f;
+            } else if (jumpTime > 0) {
+                jumpTime--;
+            } else {
+                this.velocity.y = 0.0f;
+            }
+            idle = false;
+            this.acceleration.y = Window.getPhysics().getGravity().y * 0.7f;
+            stateMachine.trigger("Jump");
+
+        } else if (onGround) {
+            this.velocity.y = 0.0f;
+        } else {
+            stateMachine.trigger("Jump");
+            this.velocity.y -= 25f;
         }
-        System.out.println(detectCollision((int) body.getPosition().x, (int) body.getPosition().y, 43, 60));
-        Vec2 position = body.getPosition();
-
-        Vec2 newPos =  new Vec2(position.x + velocity.x, position.y + velocity.y);
-        this.gameObject.getComponent(Rigidbody2D.class).getRawBody().setTransform(newPos, 0);
-
-        this.acceleration.y = Window.getPhysics().getGravity().y * 0.7f;
-
-        this.velocity.x += this.acceleration.x * dt;
-        this.velocity.y += this.acceleration.y * dt;
-        this.velocity.x = Math.max(Math.min(this.velocity.x, this.terminalVelocity.x), -this.terminalVelocity.x);
-        this.velocity.y = Math.max(Math.min(this.velocity.y, this.terminalVelocity.y), -this.terminalVelocity.y);
+        if (right) {
+            this.velocity.x = Math.min(this.velocity.x, 0);
+        }
+        Window.getScene().camera().position.x = this.gameObject.transform.position.x - 632;
+        Window.getScene().camera().position.y = this.gameObject.transform.position.y - 328;
+        //System.out.println(this.velocity);
         this.rb.setVelocity(this.velocity);
         this.rb.setAngularVelocity(0);
     }
-
-    private Vector4f collision() {
-        Body player = this.gameObject.getComponent(Rigidbody2D.class).getRawBody();
-        Vector4f dir = new Vector4f();
-        boolean canMoveLeft = true;
-        boolean canMoveRight = true;
-        boolean canMoveUp = true;
-        boolean canMoveDown = true;
-
-        for (GameObject i : Window.getScene().getGameObjects()) {
-            if (i.getComponent(PillboxCollider.class) != null) continue;
-            Vector2f object = i.transform.position;
-
-            if (object.x - 8 > player.getPosition().x + 21) {
-                continue;
-            }
-
-            if (player.getPosition().x - 21 > object.x + 8) {
-                continue;
-            }
-
-            if (player.getPosition().y + 30 < object.y - 8) {
-                continue;
-            }
-
-            if (object.y + 8 < player.getPosition().y - 31) {
-                continue;
-            }
-
-            // collision detected
-            
-            
-            if (object.x - 8 < player.getPosition().x + 21) {
-                dir.x = 1;
-            }
-            if (player.getPosition().x - 21 < object.x + 8) {
-                dir.y = 1;
-            }
-
-            if (player.getPosition().y + 30 > object.y - 8) {
-                dir.z = 1;
-            }
-
-            if (object.y + 8 > player.getPosition().y - 31) {
-                dir.w = 1;
-            }
-            return dir;
-        }
-
-        return dir;
+    public void checkOnGround() {
+        float innerPlayerWidth = this.playerWidth;
+        float yVal = 31;
+        onGround = Physics2D.checkOnGround(this.gameObject, innerPlayerWidth, yVal);
     }
-    public static Set<String> detectCollision(int playerX, int playerY, int playerWidth, int playerHeight) {
-        Set<String> validDirections = new HashSet<>();
+    public void checkCeilCol() {
+        float innerPlayerWidth = this.playerWidth;
+        float yVal = 31;
+        ceiling = Physics2D.checkCeil(this.gameObject, innerPlayerWidth, yVal);
+    }
+    public void checkRightCol() {
+        float innerPlayerWidth = this.playerWidth;
+        float yVal = 25;
+        right = Physics2D.checkRight_D(this.gameObject, innerPlayerWidth, yVal, 16, 16, 16);
+        if (right) return;
+        yVal=32;
+        right = Physics2D.checkRight_M(this.gameObject, innerPlayerWidth, yVal);
+        if (right) return;
 
-        int playerHalfWidth = playerWidth / 2;
-        int playerHalfHeight = playerHeight / 2;
-
-        for (GameObject block : Window.getScene().getGameObjects()) {
-            if (block.getComponent(PillboxCollider.class) != null) continue;
-
-            int obstacleX = (int) block.transform.position.x;  // x-position of obstacle's middle point
-            int obstacleY = (int) block.transform.position.y;  // y-position of obstacle's middle point
-            int obstacleWidth = 16;  // obstacle's width
-            int obstacleHeight = 16;  // obstacle's height
-
-            int obstacleHalfWidth = obstacleWidth / 2;
-            int obstacleHalfHeight = obstacleHeight / 2;
-
-            int dx = Math.abs(playerX - obstacleX);
-            int dy = Math.abs(playerY - obstacleY);
-
-            int combinedHalfWidth = playerHalfWidth + obstacleHalfWidth;
-            int combinedHalfHeight = playerHalfHeight + obstacleHalfHeight;
-
-
-            if (dx <= combinedHalfWidth && dy <= combinedHalfHeight) {
-                int overlapX = combinedHalfWidth - dx;
-                int overlapY = combinedHalfHeight - dy;
-                System.out.println(overlapX + " " + overlapY);
-
-                if (overlapX >= overlapY) {
-                    if (playerY > obstacleY) {
-                        validDirections.add("up");
-                    } else {
-                        validDirections.add("down");
-                    }
-                }
-
-                if (overlapY >= overlapX) {
-                    if (playerX > obstacleX) {
-                        validDirections.add("left");
-                    } else {
-                        validDirections.add("right");
-                    }
-                }
-            }
-        }
-
-        return validDirections;
+        System.out.println(right);
     }
 
 

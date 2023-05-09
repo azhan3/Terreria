@@ -46,14 +46,12 @@ public class AnimationState {
             }
         }
     }
-    public int getCur() {
-        return currentSprite;
-    }
+
     public Sprite getCurrentSprite() {
         if (currentSprite < animationFrames.size()) {
             return animationFrames.get(currentSprite).sprite;
         }
-        System.out.println("MALFUNCTION");
+
         return defaultSprite;
     }
 }
