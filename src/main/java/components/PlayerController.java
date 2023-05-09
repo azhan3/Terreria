@@ -54,6 +54,7 @@ public class PlayerController extends Component {
         checkOnGround();
         checkCeilCol();
         checkRightCol();
+        //System.out.println(right);
         if (ceiling) {
             jumpTime = 1;
             this.velocity.y = -10f;
@@ -81,32 +82,36 @@ public class PlayerController extends Component {
             this.velocity.x = 0;
         }
 
-        if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && (jumpTime > 0 || onGround)) {
+        if ((KeyListener.isKeyPressed(GLFW_KEY_SPACE) || KeyListener.isKeyPressed(GLFW_KEY_W)) && (jumpTime > 0 || onGround)) {
 
             if (onGround && jumpTime==0) {
-                jumpTime = 15;
-                this.velocity.y = 350.0f;
+                jumpTime = 3;
+                this.velocity.y = 250.0f;
             } else if (jumpTime > 0) {
                 jumpTime--;
             } else {
                 this.velocity.y = 0.0f;
             }
+            //this.acceleration.y = Window.getPhysics().getGravity().y * 5f;
+            //this.velocity.y += this.acceleration.y * dt;
             idle = false;
-            this.acceleration.y = Window.getPhysics().getGravity().y * 0.7f;
             stateMachine.trigger("Jump");
 
         } else if (onGround) {
             this.velocity.y = 0.0f;
         } else {
+            this.acceleration.y = Window.getPhysics().getGravity().y * 20f;
+
+            this.velocity.y += this.acceleration.y * dt;
             stateMachine.trigger("Jump");
-            this.velocity.y -= 25f;
         }
         if (right) {
             this.velocity.x = Math.min(this.velocity.x, 0);
         }
+
         Window.getScene().camera().position.x = this.gameObject.transform.position.x - 632;
         Window.getScene().camera().position.y = this.gameObject.transform.position.y - 328;
-        //System.out.println(this.velocity);
+        System.out.println(this.velocity);
         this.rb.setVelocity(this.velocity);
         this.rb.setAngularVelocity(0);
     }
@@ -128,8 +133,9 @@ public class PlayerController extends Component {
         yVal=32;
         right = Physics2D.checkRight_M(this.gameObject, innerPlayerWidth, yVal);
         if (right) return;
+        right = Physics2D.checkRight_T(this.gameObject, innerPlayerWidth, yVal);
+        if (right) return;
 
-        System.out.println(right);
     }
 
 

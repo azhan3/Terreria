@@ -272,6 +272,14 @@ public class Physics2D {
 
         return info.hit && info.hitObject != null && info.hitObject.getComponent(Ground.class) != null;
     }
+    public static boolean checkRight_T(GameObject gameObject, float innerPlayerWidth, float height) {
+        Vector2f raycastBegin = new Vector2f(gameObject.transform.position);
+        raycastBegin.add(innerPlayerWidth / 2.0f-16, 10.0f); // Move to the right edge of the player
+        Vector2f raycastEnd = new Vector2f(raycastBegin).add(height, 0.0f); // Cast rightwards
 
+        RaycastInfo info = Window.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
+
+        return info.hit && info.hitObject != null && info.hitObject.getComponent(Ground.class) != null;
+    }
 
 }
