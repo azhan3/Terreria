@@ -63,11 +63,13 @@ public class PlayerController extends Component {
 
         if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW_KEY_D)) {
             this.velocity.x = walkSpeed;
+            this.gameObject.transform.scale.x = 43;
             this.stateMachine.trigger("Walk");
             idle = false;
 
         } else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT) || KeyListener.isKeyPressed(GLFW_KEY_A)) {
             this.velocity.x = -walkSpeed;
+            this.gameObject.transform.scale.x = -43;
             idle = false;
             this.stateMachine.trigger("Walk");
         }
