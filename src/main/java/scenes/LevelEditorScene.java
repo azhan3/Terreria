@@ -38,7 +38,7 @@ public class LevelEditorScene extends Scene {
             return;
         }
 
-        //new NewMap();
+        new NewMap();
         System.out.println(Window.getScene().getGameObjects().size());
 
 //        obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100),

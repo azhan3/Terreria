@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class NewMap extends Component {
     private static final int WORLD_WIDTH = 100;  // Width of the world in blocks
-    private static final int WORLD_HEIGHT = 100; // Height of the world in blocks
+    private static final int WORLD_HEIGHT = 25; // Height of the world in blocks
     private static final int BLOCK_SIZE = 16;    // Size of each block (assumed square)
 
     private static final int SKY_HEIGHT = 20;    // Height of the sky area (blocks above ground)
@@ -34,13 +34,19 @@ public class NewMap extends Component {
     public static void generateWorld() {
         int[][] terrain = new int[WORLD_WIDTH][WORLD_HEIGHT];
 
-        generateTerrain(terrain);
+        // Fill terrain with blocks
+        for (int x = 0; x < WORLD_WIDTH; x++) {
+            for (int y = 0; y < WORLD_HEIGHT; y++) {
+                terrain[x][y] = WORLD_HEIGHT - SKY_HEIGHT - 1;
+            }
+        }
+
         createBlocksFromTerrain(terrain);
     }
 
     private static void generateTerrain(int[][] terrain) {
         // Generate ground level
-        int groundLevel = WORLD_HEIGHT - SKY_HEIGHT - 1;
+        int groundLevel = WORLD_HEIGHT - SKY_HEIGHT - 1 - 20;
         for (int y = 0; y < WORLD_HEIGHT; y++) {
             terrain[0][y] = groundLevel;
         }
@@ -70,8 +76,12 @@ public class NewMap extends Component {
     private static void createBlocksFromTerrain(int[][] terrain) {
         for (int x = 0; x < WORLD_WIDTH; x++) {
             for (int y = 0; y < WORLD_HEIGHT; y++) {
-                if (y < WORLD_HEIGHT - SKY_HEIGHT && y <= terrain[x][y]) {
+                if (y <= terrain[x][y]) {
                     createBlock(x, y, sprite);
+                } else {
+                    for (int i = terrain[x][y] + 1; i <= y; i++) {
+                        createBlock(x, i, sprite);
+                    }
                 }
             }
         }
