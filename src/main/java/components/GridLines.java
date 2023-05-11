@@ -29,11 +29,11 @@ public class GridLines extends Component {
             int x = firstX + (Settings.GRID_WIDTH * i);
             int y = firstY + (Settings.GRID_HEIGHT * i);
             if (i < numVtLines) {
-                DebugDraw.addLine2D(new Vector2f(x, firstY), new Vector2f(x, firstY + height), color);
+                //DebugDraw.addLine2D(new Vector2f(x, firstY), new Vector2f(x, firstY + height), color);
             }
 
             if (i < numHzLines) {
-                DebugDraw.addLine2D(new Vector2f(firstX, y), new Vector2f(firstX + width, y), color);
+                //DebugDraw.addLine2D(new Vector2f(firstX, y), new Vector2f(firstX + width, y), color);
             }
         }
     }

@@ -18,7 +18,6 @@ public class JadeContactListener implements ContactListener {
         contact.getWorldManifold(worldManifold);
         Vector2f aNormal = new Vector2f(worldManifold.normal.x, worldManifold.normal.y);
         Vector2f bNormal = new Vector2f(aNormal).negate();
-
         for (Component c : objA.getAllComponents()) {
             c.beginCollision(objB, contact, aNormal);
         }
