@@ -143,7 +143,9 @@ public class LevelEditorScene extends Scene {
                 rb.setBodyType(BodyType.Static);
                 object.addComponent(rb);
                 Box2DCollider b2d = new Box2DCollider();
+
                 b2d.setHalfSize(new Vector2f(16, 16));
+                b2d.setOffset(new Vector2f(0,0));
                 object.addComponent(b2d);
                 object.addComponent(new Ground());
 

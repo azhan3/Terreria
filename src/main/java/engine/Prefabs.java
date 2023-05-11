@@ -1,6 +1,8 @@
 package engine;
 
 import components.*;
+import org.joml.Vector2f;
+import org.lwjgl.system.CallbackI;
 import physics2d.components.PillboxCollider;
 import physics2d.components.Rigidbody2D;
 import physics2d.enums.BodyType;
@@ -81,13 +83,13 @@ public class Prefabs {
         stateMachine.setDefaultState(idle.title);
 
         PillboxCollider pb = new PillboxCollider();
-        pb.width = 0.39f;
-        pb.height = 0.31f;
+        pb.width = 43;
+        pb.height = 100;
         Rigidbody2D rb = new Rigidbody2D();
         rb.setBodyType(BodyType.Dynamic);
         rb.setContinuousCollision(false);
         rb.setFixedRotation(true);
-        rb.setMass(25.0f);
+        rb.setMass(150);
 
         player.addComponent(stateMachine);
         player.addComponent(rb);
