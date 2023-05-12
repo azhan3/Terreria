@@ -11,12 +11,17 @@ import physics2d.components.Rigidbody2D;
 import physics2d.enums.BodyType;
 import renderer.Renderer;
 import util.AssetPool;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class LevelEditorScene extends Scene {
     private Sprite selected;
     private GameObject obj1;
     private Spritesheet sprites, blocks;
     SpriteRenderer obj1Sprite;
+
+    boolean levelGenerated = false;
 
     GameObject levelEditorStuff = new GameObject("LevelEditor", new Transform(new Vector2f()), 0);
 
@@ -38,7 +43,25 @@ public class LevelEditorScene extends Scene {
             return;
         }
 
-        //new NewMap();
+        File file = new File("level.txt");
+        try {
+            Scanner scanner = new Scanner(file);
+            if (scanner.hasNextLine()) {
+                levelGenerated = true;
+            } else {
+                levelGenerated = false;
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            levelGenerated = false;
+            e.printStackTrace();
+        }
+
+        if(!levelGenerated){
+            new NewMap();
+        } else {
+
+        }
         System.out.println(Window.getScene().getGameObjects().size());
 
 //        obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100),

@@ -10,8 +10,11 @@ public class LevelScene extends Scene {
         Window.get().b = 1;
     }
 
+
+
     @Override
     public void update(float dt) {
 
     }
 }
+
