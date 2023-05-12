@@ -3,6 +3,9 @@
 **Description**
 This project is a 2D sandbox game built with Java, Gradle, LWJGL, ImGui, JBox2d, and GSON. It offers an immersive and interactive gaming experience where players can explore, build, and interact with a dynamic world.
 
+## Prototype
+![prototype](https://github.com/azhan3/Java-Game/assets/96319134/e6be1bac-c347-45be-a3d4-1c224e0b414a)
+
 ## Features
 
 - **Exploration:** Discover a vast and procedurally generated world filled with unique landscapes, biomes, and dungeons.
