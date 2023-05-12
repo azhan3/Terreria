@@ -8,7 +8,7 @@ This project is a 2D sandbox game built with Java, Gradle, LWJGL, ImGui, JBox2d,
 
 ## Features
 
-- **Exploration:** Discover a vast and procedurally generated world filled with unique landscapes, biomes, and dungeons.
+- **Exploration:** Discover a vast and procedurally generated world filled with unique landscapes, biomes, and caves.
 - **Building:** Create and design your own structures, houses, and buildings using a variety of materials.
 
 ## Installation and Setup
