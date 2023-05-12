@@ -87,6 +87,7 @@ public class Window {
         GLFWErrorCallback.createPrint(System.err).set();
 
         // Initialize GLFW
+        // Initialize GLFW
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW.");
         }

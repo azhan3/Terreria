@@ -52,7 +52,7 @@ public class PlayerController extends Component {
         boolean idle = true;
         checkOnGround();
         //System.out.println(right);
-        System.out.println(onGround);
+        //System.out.println(onGround);
 
 
 

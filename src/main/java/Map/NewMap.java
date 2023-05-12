@@ -80,12 +80,13 @@ public class NewMap extends Component {
     }
 
     private static void createBlock (int x, int y, Sprite sprite) {
+
         GameObject block = Prefabs.generateSpriteObject(sprite, BLOCK_SIZE, BLOCK_SIZE);
         Rigidbody2D rb = new Rigidbody2D();
         rb.setBodyType(BodyType.Static);
         block.addComponent(rb);
         Box2DCollider b2d = new Box2DCollider();
-        b2d.setHalfSize(new Vector2f(BLOCK_SIZE / 2.0f, BLOCK_SIZE / 2.0f));
+        b2d.setHalfSize(new Vector2f(17, 16));
         block.addComponent(b2d);
         block.addComponent(new Ground());
         block.transform.position = new Vector2f(x * BLOCK_SIZE + BLOCK_SIZE / 2.0f, y * BLOCK_SIZE + BLOCK_SIZE / 2.0f);
