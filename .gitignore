@@ -1,0 +1,21 @@
+# Ignore compiled Java class files
+*.class
+
+# Ignore build output directories
+/bin/
+/build/
+
+# Ignore IDE-specific files and directories
+.idea/
+.vscode/
+
+# Ignore Maven-specific files and directories
+target/
+
+# Ignore Gradle-specific files and directories
+build/
+.gradle/
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
