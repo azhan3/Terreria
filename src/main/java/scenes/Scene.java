@@ -101,7 +101,6 @@ public abstract class Scene {
                     objsToSerialize.add(obj);
                 }
             }
-            System.out.println(objsToSerialize);
             writer.write(gson.toJson(objsToSerialize));
             writer.close();
         } catch(IOException e) {

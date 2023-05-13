@@ -1,12 +1,10 @@
 package engine;
 
-import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import physics2d.Physics2D;
 import renderer.DebugDraw;
-import scenes.LevelEditorScene;
-import scenes.LevelScene;
+import scenes.GameScene;
 import scenes.Scene;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -40,10 +38,7 @@ public class Window {
     public static void changeScene(int newScene) {
         switch (newScene) {
             case 0:
-                currentScene = new LevelEditorScene();
-                break;
-            case 1:
-                currentScene = new LevelScene();
+                currentScene = new GameScene();
                 break;
             default:
                 assert false : "Unknown scene '" + newScene + "'";
@@ -68,7 +63,7 @@ public class Window {
     }
 
     public void run() {
-        System.out.println("Hello LWJGL " + Version.getVersion() + "!");
+        System.out.println("Started!");
 
         init();
         loop();
@@ -86,7 +81,6 @@ public class Window {
         // Setup an error callback
         GLFWErrorCallback.createPrint(System.err).set();
 
-        // Initialize GLFW
         // Initialize GLFW
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW.");
@@ -121,11 +115,7 @@ public class Window {
         // Make the window visible
         glfwShowWindow(glfwWindow);
 
-        // This line is critical for LWJGL's interoperation with GLFW's
-        // OpenGL context, or any context that is managed externally.
-        // LWJGL detects the context that is current in the current thread,
         // creates the GLCapabilities instance and makes the OpenGL
-        // bindings available for use.
         GL.createCapabilities();
 
         glEnable(GL_BLEND);
