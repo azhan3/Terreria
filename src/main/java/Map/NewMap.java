@@ -1,9 +1,6 @@
 package Map;
 
-import components.Component;
-import components.Ground;
-import components.Sprite;
-import components.Spritesheet;
+import components.*;
 import engine.GameObject;
 import engine.Prefabs;
 import engine.Window;
@@ -18,7 +15,7 @@ import java.util.Random;
 
 
 
-public class NewMap extends Component {
+public class NewMap extends MouseControls {
     private static final int WORLD_WIDTH = 95;  // Width of the world in blocks
     private static final int WORLD_HEIGHT = 15; // Height of the world in blocks
     private static final int BLOCK_SIZE = 16;    // Size of each block (assumed square)
@@ -80,7 +77,11 @@ public class NewMap extends Component {
     }
 
     private static void createBlock (int x, int y, Sprite sprite) {
-
+        int gridX = (int) (x * BLOCK_SIZE + BLOCK_SIZE / 2.0f);
+        int gridY = (int) (y * BLOCK_SIZE + BLOCK_SIZE / 2.0f);
+        if (blockInSquare(gridX, gridY)) {
+            return;
+        }
         GameObject block = Prefabs.generateSpriteObject(sprite, BLOCK_SIZE, BLOCK_SIZE);
         Rigidbody2D rb = new Rigidbody2D();
         rb.setBodyType(BodyType.Static);
@@ -89,7 +90,7 @@ public class NewMap extends Component {
         b2d.setHalfSize(new Vector2f(17, 16));
         block.addComponent(b2d);
         block.addComponent(new Ground());
-        block.transform.position = new Vector2f(x * BLOCK_SIZE + BLOCK_SIZE / 2.0f, y * BLOCK_SIZE + BLOCK_SIZE / 2.0f);
+        block.transform.position = new Vector2f(gridX, gridY);
         Window.getScene().addGameObjectToScene(block);
 
     }
