@@ -1,10 +1,10 @@
 # Testing Report: Serialization with GSON
 
-###**Date:** 2023-04-28
+### **Date:** 2023-04-28
 
-###**Tester:** Alex
+### **Tester:** Alex
 
-###**Application:** Terraria Java Game with LWJGL
+### **Application:** Terraria Java Game with LWJGL
 
 ## Test Case: Serialization with GSON
 

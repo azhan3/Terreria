@@ -1,10 +1,10 @@
 # Testing Report: Block Placement
 
-###**Date:** 2023-05-07
+### **Date:** 2023-05-07
 
-###**Tester:** Alex
+### **Tester:** Alex
 
-###**Application:** Terraria Java Game with LWJGL
+### **Application:** Terraria Java Game with LWJGL
 
 ## Test Case: Block Placement
 

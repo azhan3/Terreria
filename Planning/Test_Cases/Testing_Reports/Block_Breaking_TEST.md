@@ -1,10 +1,10 @@
 # Testing Report: Block Breaking
 
-###**Date:** 2023-05-08
+### **Date:** 2023-05-08
 
-###**Tester:** Alex
+### **Tester:** Alex
 
-###**Application:** Terraria Java Game with LWJGL
+### **Application:** Terraria Java Game with LWJGL
 
 ## Test Case: Block Breaking
 

@@ -1,10 +1,10 @@
 # Testing Report: Batch Rendering
 
-###**Date:** 2023-04-25
+### **Date:** 2023-04-25
 
-###**Tester:** Alex
+### **Tester:** Alex
 
-###**Application:** Terraria Java Game with LWJGL
+### **Application:** Terraria Java Game with LWJGL
 
 ## Test Case: Batch Rendering
 

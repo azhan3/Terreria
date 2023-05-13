@@ -1,6 +1,6 @@
 # Work Log for Terreria
 
-###Contributors: Alex, Sid
+### Contributors: Alex, Sid
 
 ## April 18th
 >- Decided on a game inspired by Terraria

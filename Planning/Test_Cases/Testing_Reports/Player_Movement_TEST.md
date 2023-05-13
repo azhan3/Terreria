@@ -1,10 +1,10 @@
 # Testing Report: Player Movement
 
-###**Date:** 2023-05-09
+### **Date:** 2023-05-09
 
-###**Tester:** Alex
+### **Tester:** Alex
 
-###**Application:** Terraria Java Game with LWJGL
+### **Application:** Terraria Java Game with LWJGL
 
 ## Test Case: Player Movement
 
