@@ -14,3 +14,6 @@
     7. Return the GameObject (go)
 8. Stop
 ```
+
+## Flowchart
+![code2flow_PeSorw (2)](https://github.com/azhan3/Java-Game/assets/96319134/733365cf-078e-43ea-8c1f-1d2760995067)
