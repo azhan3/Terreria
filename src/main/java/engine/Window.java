@@ -6,6 +6,7 @@ import physics2d.Physics2D;
 import renderer.DebugDraw;
 import scenes.GameScene;
 import scenes.Scene;
+import scenes.TitleScene;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -38,14 +39,16 @@ public class Window {
     public static void changeScene(int newScene) {
         switch (newScene) {
             case 0:
+                currentScene = new TitleScene();
+                break;
+            case 1:
                 currentScene = new GameScene();
+                currentScene.load();
                 break;
             default:
                 assert false : "Unknown scene '" + newScene + "'";
                 break;
         }
-
-        currentScene.load();
         currentScene.init();
         currentScene.start();
     }
@@ -63,8 +66,6 @@ public class Window {
     }
 
     public void run() {
-        System.out.println("Started!");
-
         init();
         loop();
 
@@ -152,8 +153,9 @@ public class Window {
             dt = endTime - beginTime;
             beginTime = endTime;
         }
-
-        currentScene.saveExit();
+        if (currentScene.id == 1) {
+            currentScene.saveExit();
+        }
     }
 
     public static int getWidth() {

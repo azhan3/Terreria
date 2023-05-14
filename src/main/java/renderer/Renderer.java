@@ -64,6 +64,7 @@ public class Renderer {
     }
 
     public void render() {
+
         currentShader.use();
         for (int i = 0; i < batches.size(); i++) {
             RenderBatch batch = batches.get(i);
