@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scene {
+    public int id;
     public GameObject levelEditorStuff;
     Physics2D physics2D = new Physics2D();
 
@@ -86,6 +87,7 @@ public abstract class Scene {
     }
 
     public void saveExit() {
+        System.out.println("SAVING...");
         Gson gson = new GsonBuilder()
                 .enableComplexMapKeySerialization()
                 .setPrettyPrinting()

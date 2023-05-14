@@ -19,7 +19,6 @@ public class MouseControls extends Component {
 
     public void pickupObject(GameObject go) {
         this.holdingObject = go;
-        System.out.println(this.holdingObject);
     }
     public void place() {
         if (holdingObject.getComponent(PillboxCollider.class) != null) {
@@ -39,7 +38,6 @@ public class MouseControls extends Component {
 
     @Override
     public void update(float dt) {
-
         curX = MouseListener.getOrthoX();
         curY = MouseListener.getOrthoY();
         curGridX = (int)(curX / Settings.GRID_WIDTH) * Settings.GRID_WIDTH;

@@ -15,11 +15,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
+
 public class GameScene extends Scene {
     private Sprite selected;
     private GameObject obj1;
     private Spritesheet sprites, blocks;
-    SpriteRenderer obj1Sprite;
 
     boolean levelGenerated = false;
 
@@ -31,6 +32,8 @@ public class GameScene extends Scene {
 
     @Override
     public void init() {
+        System.out.println("GAMESCENE");
+        id = 1;
         GameStuff.addComponent(new MouseControls());
         GameStuff.addComponent(new GridLines());
 
@@ -135,7 +138,10 @@ public class GameScene extends Scene {
                 i--;
             }
         }
-
+        if (KeyListener.isKeyPressed(GLFW_KEY_ESCAPE)) {
+            saveExit();
+            Window.changeScene(0);
+        }
         this.renderer.render();
     }
 
@@ -203,7 +209,8 @@ public class GameScene extends Scene {
         ImGui.text("Movement: Use the arrow keys or WASD keys to move the character\n" +
                 "Jump: Press the spacebar or W key to make the character jump\n" +
                 "Break Blocks: Use the left mouse button to break blocks\n" +
-                "Place Block: Select a block from your inventory and right-click to place it in the world");
+                "Place Block: Select a block from your inventory and right-click to place it in the world\n" +
+                "Press ESC to exit to title screen");
         ImGui.end();
     }
 }

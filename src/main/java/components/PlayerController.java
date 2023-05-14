@@ -20,14 +20,10 @@ public class PlayerController extends Component {
     @Override
     public void start() {
         this.rb = gameObject.getComponent(Rigidbody2D.class);
-        System.out.println(rb);
 
         this.stateMachine = gameObject.getComponent(StateMachine.class);
-        System.out.println(stateMachine);
 
         this.rb.setGravityScale(0.0f);
-
-        System.out.println("STARTED STARTED STARTED");
     }
 
     @Override
