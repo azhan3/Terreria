@@ -6,10 +6,20 @@ The goal of this project was to develop a Java game based on Terraria using LWJG
 
 ## Accomplishments
 
-Throughout the project, the team successfully achieved the following milestones and accomplishments:
+Throughout the project, we successfully achieved the following milestones and accomplishments:
 
 - Developed a fully functional Java game resembling Terraria.
 - Implemented essential game mechanics, including character movement, block interaction, and exploration.
 - Designed visually appealing graphics and animations that enhance the gameplay experience.
 - Ensured smooth performance and responsiveness for an enjoyable gaming experience.
 - Created an intuitive user interface
+
+## New Features Learned
+
+Throughout the project, we learned the following:
+
+- Gradle for build automation
+- LWJGL and OpenGL for graphics and shaders
+- GSON for Serialization
+- ImGUI for more complex GUI design
+- JBox2D as a physics engine
