@@ -15,10 +15,7 @@ import physics2d.enums.BodyType;
 import util.AssetPool;
 import java.util.Random;
 import static components.MouseControls.blockInSquare;
-
-
-
-
+import static components.MouseControls.holdingObject;
 
 
 public class NewMap extends Component {
@@ -85,9 +82,20 @@ public class NewMap extends Component {
         createTrees(35,16);
         createGrass();
         randomCaveSpawner();
+        createPlayer(-30,30);
 
 
 
+    }
+
+    private static void createPlayer( float x, float y){
+        MouseControls.holdingObject = Prefabs.generatePlayer();
+
+        holdingObject.transform.position.x = 16*(x);// Set the position of the player object to the specified position
+        holdingObject.transform.position.y = 16*(y);
+
+
+        MouseControls.place();
     }
 
 
