@@ -28,8 +28,7 @@ public class NewMap extends Component {
 
     private static final int SKY_HEIGHT = 20;    // Height of the sky area (blocks above ground)
 
-    private static final int CAVE_WIDTH = 5;
-    private static final int CAVE_HEIGHT = 5;
+
 
 
 
@@ -85,6 +84,10 @@ public class NewMap extends Component {
         createTrees(-19,27);
         createTrees(35,16);
         createGrass();
+        randomCaveSpawner();
+
+
+
     }
 
 
@@ -404,6 +407,183 @@ public class NewMap extends Component {
         createBlock(-44,27,longGrass);
         createBlock(-46,27,longGrass);
     }
+
+    private static void caveSpawn1(){
+
+        int pixelAmount = 16;
+
+        MouseControls.deleteBlock(pixelAmount*(-36),pixelAmount*(4));
+        MouseControls.deleteBlock(pixelAmount*(-35),pixelAmount*(4));
+        for (int x = 0; x < 4; x++) {
+            MouseControls.deleteBlock(pixelAmount*(x-38),pixelAmount*(3));
+        }
+        for (int x = 0; x < 4; x++) {
+            MouseControls.deleteBlock(pixelAmount*(x-39),pixelAmount*(2));
+        }
+        for (int x = 0; x < 3; x++) {
+            MouseControls.deleteBlock(pixelAmount*(x-39),pixelAmount*(1));
+        }
+        for (int y = 0; y<2; y++) {
+            for (int x = 0; x < 5; x++) {
+                MouseControls.deleteBlock(pixelAmount*(x-42),pixelAmount*(y-1));
+            }
+        }
+        for (int y = 0; y<2; y++) {
+            for (int x = 0; x < 23; x++) {
+                MouseControls.deleteBlock(pixelAmount*(x-61),pixelAmount*(y-2));
+            }
+        }
+
+        for (int x = 0; x < 15; x++) {
+            MouseControls.deleteBlock(pixelAmount*(x-60),pixelAmount*(0));
+        }
+        for (int x = 0; x < 12; x++) {
+            MouseControls.deleteBlock(pixelAmount*(x-59),pixelAmount*(1));
+        }
+        for (int x = 0; x < 10; x++) {
+            MouseControls.deleteBlock(pixelAmount*(x-58),pixelAmount*(2));
+        }
+        for (int x = 0; x < 15; x++) {
+            MouseControls.deleteBlock(pixelAmount*(x-60),pixelAmount*(0));
+        }
+        for (int y = 0; y<2; y++) {
+            for (int x = 0; x < 22; x++) {
+                MouseControls.deleteBlock(pixelAmount * (x - 62), pixelAmount * (y - 3));
+            }
+        }
+        for (int x = 0; x < 21; x++) {
+            MouseControls.deleteBlock(pixelAmount * (x - 62), pixelAmount * (-4));
+        }
+        for (int x = 0; x < 18; x++) {
+            MouseControls.deleteBlock(pixelAmount * (x - 61), pixelAmount * (-5));
+        }
+        for (int x = 0; x < 15; x++) {
+            MouseControls.deleteBlock(pixelAmount * (x - 60), pixelAmount * (-6));
+        }
+        for (int x = 0; x < 11; x++) {
+            MouseControls.deleteBlock(pixelAmount * (x - 58), pixelAmount * (-7));
+        }
+        for (int x = 0; x < 8; x++) {
+            MouseControls.deleteBlock(pixelAmount * (x - 57), pixelAmount * (-8));
+        }
+
+    }
+    private static void caveSpawn2() {
+        int pixelAmount = 16;
+
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 2; x++) {
+                MouseControls.deleteBlock(pixelAmount * (x - 30), pixelAmount * (y + 3));
+            }
+        }
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 2; x++) {
+                MouseControls.deleteBlock(pixelAmount * (x - 31), pixelAmount * (y + 1));
+            }
+        }
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 2; x++) {
+                MouseControls.deleteBlock(pixelAmount * (x - 32), pixelAmount * (y-1));
+            }
+        }
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 4; x++) {
+                MouseControls.deleteBlock(pixelAmount * (x - 35), pixelAmount * (y - 8));
+            }
+        }
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 8; x++) {
+                MouseControls.deleteBlock(pixelAmount * (x - 37), pixelAmount * (y - 6));
+            }
+        }
+        for (int y = 0; y < 6; y++) {
+            for (int x = 0; x < 6; x++) {
+                MouseControls.deleteBlock(pixelAmount * (x - 36), pixelAmount * (y - 7));
+            }
+        }
+
+    }
+    private static void caveSpawn3(){
+        int pixelAmount = 16;
+
+        MouseControls.deleteBlock(pixelAmount*(-19),pixelAmount*(4));
+        MouseControls.deleteBlock(pixelAmount*(-20),pixelAmount*(4));
+        for (int x = 3; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount*(-x+-16),pixelAmount*(3));
+        }
+        for (int x = 3; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount*(-x-15),pixelAmount*(2));
+        }
+        for (int x = 2; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount*(-x-15),pixelAmount*(1));
+        }
+        for (int y = 1; y>=0; y--) {
+            for (int x = 4; x >= 0; x--) {
+                MouseControls.deleteBlock(pixelAmount*(-x-12),pixelAmount*(y-1));
+            }
+        }
+        for (int y = 1; y>=0; y--) {
+            for (int x = 22; x >= 0; x--) {
+                MouseControls.deleteBlock(pixelAmount*(-x+9),pixelAmount*(y-2));
+            }
+        }
+
+        for (int x = 14; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount*(-x+9),pixelAmount*(0));
+        }
+        for (int x = 11; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount*(-x+8),pixelAmount*(1));
+        }
+        for (int x = 9; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount*(-x+7),pixelAmount*(2));
+        }
+        for (int x = 14; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount*(-x+9),pixelAmount*(0));
+        }
+        for (int y = 1; y>=0; y--) {
+            for (int x = 21; x >= 0; x--) {
+                MouseControls.deleteBlock(pixelAmount * (-x + 11), pixelAmount * (y - 3));
+            }
+        }
+        for (int x = 20; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount * (-x + 11), pixelAmount * (-4));
+        }
+        for (int x = 17; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount * (-x + 10), pixelAmount * (-5));
+        }
+        for (int x = 14; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount * (-x + 9), pixelAmount * (-6));
+        }
+        for (int x = 10; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount * (-x + 7), pixelAmount * (-7));
+        }
+        for (int x = 7; x >= 0; x--) {
+            MouseControls.deleteBlock(pixelAmount * (-x + 6), pixelAmount * (-8));
+        }
+
+    }
+    public static void randomCaveSpawner() {
+        int randomNumber = (int)(Math.random() * 3);
+
+        switch(randomNumber) {
+            case 0:
+                caveSpawn1();
+                break;
+            case 1:
+                caveSpawn2();
+                break;
+            case 2:
+                caveSpawn3();
+                break;
+            default:
+
+                break;
+        }
+    }
+
+
+
+
 
 
 
