@@ -67,7 +67,7 @@ public class MouseControls extends Component {
         }
     }
 
-    private boolean blockInSquare(float x, float y) {
+    public static boolean blockInSquare(float x, float y) {
         for (GameObject block : Window.getScene().getGameObjects()) {
             if (block.transform.position.x == x + 8 && block.transform.position.y == y + 8) {
                 return true;

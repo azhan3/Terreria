@@ -1,7 +1,6 @@
 package physics2d;
 
 import components.Ground;
-import components.PlayerController;
 import engine.GameObject;
 import engine.Transform;
 import engine.Window;
@@ -10,12 +9,10 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 import physics2d.components.Box2DCollider;
 import physics2d.components.CircleCollider;
 import physics2d.components.PillboxCollider;
 import physics2d.components.Rigidbody2D;
-import renderer.DebugDraw;
 
 public class Physics2D {
     private Vec2 gravity = new Vec2(0, -50.0f);
@@ -27,7 +24,7 @@ public class Physics2D {
     private int positionIterations = 20;
 
     public Physics2D() {
-        world.setContactListener(new JadeContactListener());
+        world.setContactListener(new ContactListener());
     }
 
     public Vector2f getGravity() {
