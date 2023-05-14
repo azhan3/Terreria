@@ -90,6 +90,16 @@
 >- Set up physics simulation for collisions and interactions.
 >- Added basic physics components to game objects.
 
+## May 9th - GAME DAY
+
+| Feedback                                                                     | Proposed Solutions                                |
+|------------------------------------------------------------------------------|---------------------------------------------------|
+| Character "moonwalking"<br/>- Aydan                                          | Flip the character sprite when turning - Easy Fix |
+| Box Colliders not working properly (character phasing though)<br/>- Everyone | Fix JBox2D world physics implementation           |
+| Gravity too low (Jump too slow) <br/> - Everyone | Increase gravity in physics engine|
+| Animation too Good <br/> - Ryan Zhu | Keep it the same :) |
+
+
 ## May 10th
 
 >- Created ProceduralWorldGenerator class for generating game worlds.
