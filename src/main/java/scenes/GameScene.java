@@ -94,7 +94,7 @@ public class GameScene extends Scene {
                         48, 48, 2, 0));
         AssetPool.addSpritesheet("assets/images/spritesheets/blocks.png",
                 new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/blocks.png"),
-                        16, 16, 30, 0));
+                        16, 16, 36, 0));
         AssetPool.addSpritesheet("assets/images/spritesheets/player_walk.png", new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/player_walk.png"), 43, 60, 10, 0));
         AssetPool.addSpritesheet("assets/images/spritesheets/player_swing.png", new Spritesheet(AssetPool.getTexture("assets/images/spritesheets/player_swing.png"), 43, 60, 10, 0));
 
