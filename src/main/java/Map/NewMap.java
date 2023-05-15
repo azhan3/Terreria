@@ -48,6 +48,7 @@ public class NewMap extends Component {
     static Sprite treeRoot = blocks.getSprite(19);
     static Sprite leaves = blocks.getSprite(10);
     static Sprite longGrass = blocks.getSprite(3);
+    static Sprite diamonds = blocks.getSprite(30);
 
 
 
@@ -83,6 +84,7 @@ public class NewMap extends Component {
         createGrass();
         randomCaveSpawner();
         createPlayer(-30,30);
+
 
 
 
@@ -134,9 +136,9 @@ public class NewMap extends Component {
         }
     }
     private static void createRandomOres() {
-        int startX = -46; // the x-coordinate where the structure will begin
+        int startX = -50; // the x-coordinate where the structure will begin
         int startY = -15; // the y-coordinate where the structure will begin
-        int width = 50; // the width of the structure
+        int width = 62; // the width of the structure
         int height = 20; // the height of the structure
         int passageWidth = 4; // the width of the passages between the stones
 
@@ -144,7 +146,7 @@ public class NewMap extends Component {
             for (int y = startY; y < startY + height; y++) {
                 if (x < startX + passageWidth || x >= startX + width - passageWidth ||
                         Math.random() < 0.2) {
-                    createBlock(x, y, dirt);
+                    createBlock(x, y, diamonds);
                 } else {
                     createBlock(x, y, stone);
                 }
@@ -280,7 +282,7 @@ public class NewMap extends Component {
                 createBlock(x-74, y+9, dirt);
             }
         }
-        for (int x = 0; x < 36; x++) {
+        for (int x = 0; x < 28; x++) {
             for (int y = 0; y < WORLD_HEIGHT; y++) {
                 if (y <= terrain[x][y]) {
                     createBlock(x-74, y-10, stone);
