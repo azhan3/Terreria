@@ -13,14 +13,14 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
 public class MouseControls extends Component {
-    GameObject holdingObject = null;
+    public static GameObject holdingObject = null;
     Float curX, curY;
     int curGridX, curGridY;
 
     public void pickupObject(GameObject go) {
         this.holdingObject = go;
     }
-    public void place() {
+    public static void place() {
         if (holdingObject.getComponent(PillboxCollider.class) != null) {
             Window.getScene().addGameObjectToScene(holdingObject);
 
@@ -57,7 +57,7 @@ public class MouseControls extends Component {
             deleteBlock(curGridX, curGridY);
         }
     }
-    private void deleteBlock(float x, float y) {
+    public static void deleteBlock(float x, float y) {
         for (GameObject block : Window.getScene().getGameObjects()) {
             if (block.transform.position.x == x + 8 && block.transform.position.y == y + 8) {
                 block.destroy();
