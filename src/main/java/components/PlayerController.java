@@ -28,6 +28,9 @@ public class PlayerController extends Component {
 
     @Override
     public void update(float dt) {
+        if (this.rb.getRawBody() != null) {
+            this.velocity.y = this.rb.getRawBody().getLinearVelocity().y;
+        }
         boolean idle = true;
         checkOnGround();
 

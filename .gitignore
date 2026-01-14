@@ -1,21 +1,22 @@
-# Ignore compiled Java class files
-*.class
-
-# Ignore build output directories
-/bin/
-/build/
-
-# Ignore IDE-specific files and directories
-.idea/
-.vscode/
-
-# Ignore Maven-specific files and directories
-target/
-
-# Ignore Gradle-specific files and directories
-build/
+# Gradle
 .gradle/
+build/
 
-# Ignore system-specific files
-.DS_Store
-Thumbs.db
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.classpath
+.project
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*.log
+
+# Project specific
+level.txt

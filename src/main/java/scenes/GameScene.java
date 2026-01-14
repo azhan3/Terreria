@@ -27,7 +27,7 @@ public class GameScene extends Scene {
     GameObject GameStuff = new GameObject("Game", new Transform(new Vector2f()), 0);
 
     public GameScene() {
-
+        loadResources();
     }
 
     @Override
@@ -37,7 +37,6 @@ public class GameScene extends Scene {
         GameStuff.addComponent(new MouseControls());
         GameStuff.addComponent(new GridLines());
 
-        loadResources();
         this.camera = new Camera(new Vector2f(0, 0));
         sprites = AssetPool.getSpritesheet("assets/images/spritesheets/spritesheet.png");
         blocks = AssetPool.getSpritesheet("assets/images/spritesheets/blocks.png");
@@ -47,17 +46,21 @@ public class GameScene extends Scene {
         }
 
         File file = new File("level.txt");
-        try {
-            Scanner scanner = new Scanner(file);
-            if (scanner.hasNextLine()) {
-                levelGenerated = true;
-            } else {
+        if (file.exists()) {
+            try {
+                Scanner scanner = new Scanner(file);
+                if (scanner.hasNextLine()) {
+                    levelGenerated = true;
+                } else {
+                    levelGenerated = false;
+                }
+                scanner.close();
+            } catch (FileNotFoundException e) {
                 levelGenerated = false;
+                e.printStackTrace();
             }
-            scanner.close();
-        } catch (FileNotFoundException e) {
+        } else {
             levelGenerated = false;
-            e.printStackTrace();
         }
 
         if(!levelGenerated){
@@ -121,9 +124,6 @@ public class GameScene extends Scene {
     public void update(float dt) {
         GameStuff.update(dt);
 
-        for (GameObject go : this.gameObjects) {
-            go.update(dt);
-        }
         this.camera.adjustProjection();
         this.physics2D.update(dt);
 
@@ -162,11 +162,11 @@ public class GameScene extends Scene {
             Sprite sprite = blocks.getSprite(i);
             float spriteWidth = sprite.getWidth() ;
             float spriteHeight = sprite.getHeight() ;
-            int id = sprite.getTexId();
+            long id = sprite.getTexId();
             Vector2f[] texCoords = sprite.getTexCoords();
 
             ImGui.pushID(i);
-            if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y)) {
+            if (ImGui.imageButton("", (int) id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y)) {
                 GameObject object = Prefabs.generateSpriteObject(sprite, 16, 16);
                 Rigidbody2D rb = new Rigidbody2D();
                 rb.setBodyType(BodyType.Static);
@@ -194,10 +194,10 @@ public class GameScene extends Scene {
         Sprite sprite = playerSprites.getSprite(0);
         float spriteWidth = sprite.getWidth() * 4;
         float spriteHeight = sprite.getHeight() * 4;
-        int id = sprite.getTexId();
+        long id = sprite.getTexId();
         Vector2f[] texCoords = sprite.getTexCoords();
 
-        if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+        if (ImGui.imageButton("player", (int) id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
             GameObject plr = Prefabs.generatePlayer();
             GameStuff.getComponent(MouseControls.class).pickupObject(plr);
         }

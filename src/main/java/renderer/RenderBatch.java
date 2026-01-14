@@ -40,7 +40,8 @@ public class RenderBatch implements Comparable<RenderBatch> {
     private int numSprites;
     private boolean hasRoom;
     private float[] vertices;
-    private int[] texSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+    private int[] texSlots = {1, 2, 3, 4, 5, 6, 7, 8};
+
 
     private List<Texture> textures;
     private int vaoID, vboID;
@@ -156,11 +157,17 @@ public class RenderBatch implements Comparable<RenderBatch> {
         glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
+        glEnableVertexAttribArray(3);
+        glEnableVertexAttribArray(4);
 
         glDrawElements(GL_TRIANGLES, this.numSprites * 6, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
+        glDisableVertexAttribArray(3);
+        glDisableVertexAttribArray(4);
         glBindVertexArray(0);
 
         for (int i=0; i < textures.size(); i++) {

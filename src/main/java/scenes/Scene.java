@@ -12,6 +12,7 @@ import engine.Transform;
 import physics2d.Physics2D;
 import renderer.Renderer;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -117,6 +118,9 @@ public abstract class Scene {
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
                 .create();
+
+        File file = new File("level.txt");
+        if (!file.exists()) return;
 
         String inFile = "";
         try {
